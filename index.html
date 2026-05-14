@@ -7,12 +7,15 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <nav class="navbar">
+    <div class="nav-inner">GitHub Finder</div>
+  </nav>
+
   <main class="app">
     <section class="hero">
-      <p class="eyebrow">GitHub Finder</p>
-      <h1>GitHub 사용자를 검색해보세요</h1>
+      <h1>Search GitHub Users</h1>
       <p class="description">
-        username을 입력하면 GitHub REST API로 사용자 정보와 공개 repository 목록을 불러옵니다.
+        Enter a username to fetch a user profile and repos
       </p>
 
       <form id="search-form" class="search-form">
@@ -33,28 +36,34 @@
 
     <section id="profile-section" class="profile-section hidden" aria-live="polite">
       <article class="profile-card">
-        <img id="avatar" class="avatar" src="" alt="">
-        <div class="profile-info">
-          <h2 id="profile-name"></h2>
-          <p id="profile-login" class="profile-login"></p>
-          <p id="profile-bio" class="profile-bio"></p>
+        <div class="profile-left">
+          <img id="avatar" class="avatar" src="" alt="">
+          <a id="profile-link" class="profile-link" href="#" target="_blank" rel="noopener noreferrer">
+            View Profile
+          </a>
+        </div>
 
+        <div class="profile-info">
           <div class="stats">
-            <span><strong id="followers"></strong> followers</span>
-            <span><strong id="following"></strong> following</span>
-            <span><strong id="public-repos"></strong> repos</span>
+            <span class="badge badge-blue">Public Repos: <strong id="public-repos"></strong></span>
+            <span class="badge badge-gray">Public Gists: <strong id="public-gists"></strong></span>
+            <span class="badge badge-green">Followers: <strong id="followers"></strong></span>
+            <span class="badge badge-cyan">Following: <strong id="following"></strong></span>
           </div>
 
-          <a id="profile-link" class="profile-link" href="#" target="_blank" rel="noopener noreferrer">
-            GitHub 프로필 보기
-          </a>
+          <ul class="info-list">
+            <li>Company: <span id="profile-company"></span></li>
+            <li>Website/Blog: <a id="profile-blog" href="#" target="_blank" rel="noopener noreferrer"></a></li>
+            <li>Location: <span id="profile-location"></span></li>
+            <li>Member Since: <span id="member-since"></span></li>
+          </ul>
         </div>
       </article>
     </section>
 
     <section id="repos-section" class="repos-section hidden">
       <div class="section-title">
-        <h2>Public Repositories</h2>
+        <h2>Latest Repos</h2>
         <span id="repo-count"></span>
       </div>
       <div id="repo-list" class="repo-list"></div>

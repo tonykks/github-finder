@@ -8,13 +8,15 @@ const repoCount = document.querySelector("#repo-count");
 const searchButton = searchForm.querySelector("button");
 
 const avatar = document.querySelector("#avatar");
-const profileName = document.querySelector("#profile-name");
-const profileLogin = document.querySelector("#profile-login");
-const profileBio = document.querySelector("#profile-bio");
 const followers = document.querySelector("#followers");
 const following = document.querySelector("#following");
 const publicRepos = document.querySelector("#public-repos");
+const publicGists = document.querySelector("#public-gists");
 const profileLink = document.querySelector("#profile-link");
+const profileCompany = document.querySelector("#profile-company");
+const profileBlog = document.querySelector("#profile-blog");
+const profileLocation = document.querySelector("#profile-location");
+const memberSince = document.querySelector("#member-since");
 
 // 검색 폼을 제출하면 브라우저 새로고침을 막고 GitHub 검색을 시작합니다.
 searchForm.addEventListener("submit", async (event) => {
@@ -43,7 +45,7 @@ async function searchGitHubUser(username) {
     // 사용자 정보와 repository 목록은 서로 독립적이므로 동시에 요청합니다.
     const [userResponse, reposResponse] = await Promise.all([
       fetch(`https://api.github.com/users/${encodedUsername}`),
-      fetch(`https://api.github.com/users/${encodedUsername}/repos?sort=updated&per_page=100`),
+      fetch(`https://api.github.com/users/${encodedUsername}/repos?sort=updated&per_page=5`),
     ]);
 
     if (userResponse.status === 404) {
@@ -73,13 +75,24 @@ async function searchGitHubUser(username) {
 function renderProfile(user) {
   avatar.src = user.avatar_url;
   avatar.alt = `${user.login} 프로필 이미지`;
-  profileName.textContent = user.name || user.login;
-  profileLogin.textContent = `@${user.login}`;
-  profileBio.textContent = user.bio || "소개글이 없습니다.";
+  publicRepos.textContent = user.public_repos;
+  publicGists.textContent = user.public_gists;
   followers.textContent = user.followers;
   following.textContent = user.following;
-  publicRepos.textContent = user.public_repos;
   profileLink.href = user.html_url;
+  profileCompany.textContent = getDisplayValue(user.company);
+  profileLocation.textContent = getDisplayValue(user.location);
+  memberSince.textContent = formatDate(user.created_at);
+
+  if (isEmpty(user.blog)) {
+    profileBlog.removeAttribute("href");
+    profileBlog.classList.add("muted");
+    profileBlog.textContent = "정보 없음";
+  } else {
+    profileBlog.href = normalizeUrl(user.blog);
+    profileBlog.classList.remove("muted");
+    profileBlog.textContent = user.blog;
+  }
 
   profileSection.classList.remove("hidden");
 }
@@ -87,7 +100,7 @@ function renderProfile(user) {
 // API에서 받은 repository 배열을 카드 목록으로 만듭니다.
 function renderRepos(repos) {
   repoList.innerHTML = "";
-  repoCount.textContent = `${repos.length}개`;
+  repoCount.textContent = "";
 
   if (repos.length === 0) {
     repoList.innerHTML = '<p class="repo-description">공개 repository가 없습니다.</p>';
@@ -99,8 +112,10 @@ function renderRepos(repos) {
     const repoCard = document.createElement("article");
     const title = document.createElement("h3");
     const link = document.createElement("a");
-    const description = document.createElement("p");
     const meta = document.createElement("div");
+    const stars = document.createElement("span");
+    const watchers = document.createElement("span");
+    const forks = document.createElement("span");
 
     repoCard.className = "repo-card";
     link.href = repo.html_url;
@@ -108,18 +123,14 @@ function renderRepos(repos) {
     link.rel = "noopener noreferrer";
     link.textContent = repo.name;
 
-    description.className = "repo-description";
-    description.textContent = repo.description || "설명이 없습니다.";
-
     meta.className = "repo-meta";
-    meta.innerHTML = `
-      <span>Language: ${escapeHtml(repo.language || "N/A")}</span>
-      <span>Stars: ${repo.stargazers_count}</span>
-      <span>Forks: ${repo.forks_count}</span>
-    `;
+    stars.textContent = `Stars: ${repo.stargazers_count}`;
+    watchers.textContent = `Watchers: ${repo.watchers_count}`;
+    forks.textContent = `Forks: ${repo.forks_count}`;
 
     title.appendChild(link);
-    repoCard.append(title, description, meta);
+    meta.append(stars, watchers, forks);
+    repoCard.append(title, meta);
 
     repoList.appendChild(repoCard);
   });
@@ -147,12 +158,22 @@ function setLoading(isLoading) {
   usernameInput.disabled = isLoading;
 }
 
-// innerHTML에 넣는 값이 HTML로 해석되지 않도록 특수 문자를 바꿉니다.
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+function isEmpty(value) {
+  return value === null || value === undefined || String(value).trim() === "";
+}
+
+function getDisplayValue(value) {
+  return isEmpty(value) ? "정보 없음" : value;
+}
+
+function formatDate(value) {
+  return value ? value.slice(0, 10) : "정보 없음";
+}
+
+function normalizeUrl(value) {
+  if (value.startsWith("http://") || value.startsWith("https://")) {
+    return value;
+  }
+
+  return `https://${value}`;
 }
