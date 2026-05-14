@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Finder</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <p class="eyebrow">GitHub Finder</p>
+      <h1>GitHub 사용자를 검색해보세요</h1>
+      <p class="description">
+        username을 입력하면 GitHub REST API로 사용자 정보와 공개 repository 목록을 불러옵니다.
+      </p>
+
+      <form id="search-form" class="search-form">
+        <label for="username-input">GitHub username</label>
+        <div class="search-row">
+          <input
+            id="username-input"
+            type="text"
+            placeholder="예: octocat"
+            autocomplete="off"
+          >
+          <button type="submit">검색</button>
+        </div>
+      </form>
+
+      <p id="message" class="message" role="status"></p>
+    </section>
+
+    <section id="profile-section" class="profile-section hidden" aria-live="polite">
+      <article class="profile-card">
+        <img id="avatar" class="avatar" src="" alt="">
+        <div class="profile-info">
+          <h2 id="profile-name"></h2>
+          <p id="profile-login" class="profile-login"></p>
+          <p id="profile-bio" class="profile-bio"></p>
+
+          <div class="stats">
+            <span><strong id="followers"></strong> followers</span>
+            <span><strong id="following"></strong> following</span>
+            <span><strong id="public-repos"></strong> repos</span>
+          </div>
+
+          <a id="profile-link" class="profile-link" href="#" target="_blank" rel="noopener noreferrer">
+            GitHub 프로필 보기
+          </a>
+        </div>
+      </article>
+    </section>
+
+    <section id="repos-section" class="repos-section hidden">
+      <div class="section-title">
+        <h2>Public Repositories</h2>
+        <span id="repo-count"></span>
+      </div>
+      <div id="repo-list" class="repo-list"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

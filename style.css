@@ -1,0 +1,293 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #1f2937;
+  background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 50%, #ecfeff 100%);
+}
+
+a {
+  color: inherit;
+}
+
+.app {
+  width: min(100%, 1040px);
+  margin: 0 auto;
+  padding: 48px 20px;
+}
+
+.hero {
+  padding: 36px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(32px, 6vw, 56px);
+  line-height: 1.1;
+  color: #0f172a;
+}
+
+.description {
+  max-width: 640px;
+  margin: 16px 0 28px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.search-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.search-row {
+  display: flex;
+  gap: 12px;
+}
+
+.search-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 15px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-row input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
+}
+
+.search-row button {
+  padding: 0 26px;
+  border: 0;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #2563eb;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.search-row button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.search-row button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.message {
+  min-height: 24px;
+  margin: 18px 0 0;
+  font-weight: 700;
+  color: #475569;
+}
+
+.message.error {
+  color: #dc2626;
+}
+
+.profile-section,
+.repos-section {
+  margin-top: 24px;
+}
+
+.profile-card,
+.repo-card {
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 16px 48px rgba(15, 23, 42, 0.08);
+}
+
+.profile-card {
+  display: flex;
+  gap: 24px;
+  padding: 28px;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #dbeafe;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-info h2 {
+  margin: 4px 0;
+  font-size: 30px;
+  color: #0f172a;
+}
+
+.profile-login,
+.profile-bio {
+  margin: 8px 0;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.profile-login {
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.stats span {
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1e3a8a;
+}
+
+.profile-link {
+  display: inline-block;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #ffffff;
+  background: #0f172a;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.section-title h2 {
+  margin: 0;
+  color: #0f172a;
+}
+
+#repo-count {
+  color: #64748b;
+  font-weight: 700;
+}
+
+.repo-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.repo-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px;
+}
+
+.repo-card h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.repo-card h3 a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.repo-card h3 a:hover {
+  text-decoration: underline;
+}
+
+.repo-description {
+  flex: 1;
+  margin: 0;
+  line-height: 1.5;
+  color: #475569;
+}
+
+.repo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.repo-meta span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #f1f5f9;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .app {
+    padding: 28px 14px;
+  }
+
+  .hero,
+  .profile-card,
+  .repo-card {
+    border-radius: 20px;
+  }
+
+  .hero {
+    padding: 24px;
+  }
+
+  .search-row,
+  .profile-card {
+    flex-direction: column;
+  }
+
+  .search-row button {
+    width: 100%;
+    padding: 15px 18px;
+  }
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .repo-list {
+    grid-template-columns: 1fr;
+  }
+}
